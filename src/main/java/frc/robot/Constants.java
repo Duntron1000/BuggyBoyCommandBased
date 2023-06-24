@@ -39,6 +39,16 @@ public final class Constants {
   public static final double EXTEND_KMaxOutput = 1; 
   public static final double EXTEND_KMinOutput = -1;
 
+  public static final double pidTiltPos1 = -10.2;
+  public static final double pidTiltPos2 = -73;
+  public static final double pidTiltPos3 = -53.6;
+  public static final double pidTiltPos4 = -76;
+
+  public static final double pidExtendPos1 = 0;
+  public static final double pidExtendPos2 = -1;
+  public static final double pidExtendPos3 = 0;
+  public static final double pidExtendPos4 = 0;
+
   public static final int INTAKE_LEFT = 8;
   public static final int INTAKE_RIGHT = 9;
 

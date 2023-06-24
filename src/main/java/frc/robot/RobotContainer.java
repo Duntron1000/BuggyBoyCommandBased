@@ -12,15 +12,20 @@ import frc.robot.autons.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.*;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
@@ -35,9 +40,10 @@ public class RobotContainer {
   private final XboxController xbox = new XboxController(1);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the trigger bindings
     driveSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveSubsystem, () -> joystick.getY(), () -> joystick2.getY()));
@@ -58,7 +64,11 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //Tilt pid
     new JoystickButton(xbox, 1).whileTrue(new ArmTiltPIDCmd(armSubsystem, -1));
-    new JoystickButton(xbox, 2).whileTrue(new ArmTiltPIDCmd(armSubsystem, -50));
+    //new JoystickButton(xbox, 2).whileTrue(new ArmTiltPIDCmd(armSubsystem, -50).andThen(new ToggleIntakeCmd(pneumatics)));
+    //new JoystickButton(xbox, 2).and(Constants.pidTiltPos2 > armSubsystem.getEncoder()).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
+    //new JoystickButton(xbox, 2).and(() -> Constants.pidExtendPos2 > armSubsystem.getEncoder()).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
+    new JoystickButton(xbox, 2).and(new JoystickButton(joystick,3)).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
+
     new JoystickButton(xbox, 3).whileTrue(new ArmTiltPIDCmd(armSubsystem, -72.4));
     new JoystickButton(xbox, 4).whileTrue(new ArmTiltPIDCmd(armSubsystem, -76));
     //Tilt manual

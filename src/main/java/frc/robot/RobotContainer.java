@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
+import java.util.function.DoubleSupplier;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,7 +39,9 @@ public class RobotContainer {
 
   private final Joystick joystick = new Joystick(0);
   private final Joystick joystick2 = new Joystick(3);
-  private final XboxController xbox = new XboxController(1);
+  //private final XboxController xbox = new XboxController(1);
+  private final CommandXboxController xbox = new CommandXboxController(1);
+  private DoubleSupplier sup = () -> armSubsystem.getEncoder();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
@@ -63,24 +67,26 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     //Tilt pid
-    new JoystickButton(xbox, 1).whileTrue(new ArmTiltPIDCmd(armSubsystem, -1));
+    xbox.a().whileTrue(new ArmTiltPIDCmd(armSubsystem, -1));
     //new JoystickButton(xbox, 2).whileTrue(new ArmTiltPIDCmd(armSubsystem, -50).andThen(new ToggleIntakeCmd(pneumatics)));
     //new JoystickButton(xbox, 2).and(Constants.pidTiltPos2 > armSubsystem.getEncoder()).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
-    //new JoystickButton(xbox, 2).and(() -> Constants.pidExtendPos2 > armSubsystem.getEncoder()).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
-    new JoystickButton(xbox, 2).and(new JoystickButton(joystick,3)).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
+    xbox.b().and(armSubsystem.bigger(Constants.pidTiltPos2)).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new WaitCommand(2.0), new ToggleIntakeCmd(pneumatics)));
+    xbox.b().and(armSubsystem.unbigger(Constants.pidTiltPos2)).whileTrue(new SequentialCommandGroup( new ToggleIntakeCmd(pneumatics), new WaitCommand(2.0), new ArmTiltPIDCmd(armSubsystem, -50)));
 
-    new JoystickButton(xbox, 3).whileTrue(new ArmTiltPIDCmd(armSubsystem, -72.4));
-    new JoystickButton(xbox, 4).whileTrue(new ArmTiltPIDCmd(armSubsystem, -76));
+    //new JoystickButton(xbox, 2).and(new JoystickButton(joystick,3)).whileTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armSubsystem, -50), new ToggleIntakeCmd(pneumatics)));
+
+    //new JoystickButton(xbox, 3).whileTrue(new ArmTiltPIDCmd(armSubsystem, -72.4));
+    xbox.y().whileTrue(new ArmTiltPIDCmd(armSubsystem, -76));
     //Tilt manual
-    new POVButton(xbox, 0).whileTrue(new ManualArmTiltCmd(armSubsystem, -4));
-    new POVButton(xbox, 180).whileTrue(new ManualArmTiltCmd(armSubsystem, 4));
+    //new POVButton(xbox, 0).whileTrue(new ManualArmTiltCmd(armSubsystem, -4));
+    //new POVButton(xbox, 180).whileTrue(new ManualArmTiltCmd(armSubsystem, 4));
     //In Out PID
     
     //In out manual
 
     //Grabber
-    new JoystickButton(xbox, 5).whileTrue(new RunIntakeCmd(intakeSubsytem, -.2));
-    new JoystickButton(xbox, 6).whileTrue(new RunIntakeCmd(intakeSubsytem, .6));
+    //new JoystickButton(xbox, 5).whileTrue(new RunIntakeCmd(intakeSubsytem, -.2));
+    //new JoystickButton(xbox, 6).whileTrue(new RunIntakeCmd(intakeSubsytem, .6));
 
     //Grabber position
     new JoystickButton(joystick, 5).whileTrue(new ToggleIntakeCmd(pneumatics));

@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -29,6 +31,14 @@ public class ArmTiltSubsystem extends SubsystemBase {
     m_PidController.setIZone(Constants.TILT_KIz);
     m_PidController.setFF(Constants.TILT_KFF);
     m_PidController.setOutputRange(Constants.TILT_KMinOutput, Constants.TILT_KMaxOutput);
+  }
+
+  public BooleanSupplier bigger(double itemOne){
+    return () -> itemOne < getEncoder();
+  }
+
+  public BooleanSupplier unbigger(double thing){
+    return () -> thing > getEncoder();
   }
 
 

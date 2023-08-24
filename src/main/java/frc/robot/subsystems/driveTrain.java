@@ -23,36 +23,39 @@ public class driveTrain extends SubsystemBase {
   private final CANSparkMax right2 = new CANSparkMax(Constants.CAN_RIGHT2, MotorType.kBrushless);
 
   //encoders
-  private final RelativeEncoder leftEncoder;
-  private final RelativeEncoder rightEncoder;
+  private final RelativeEncoder leftEncoder = left1.getEncoder();
+  private final RelativeEncoder rightEncoder = right1.getEncoder();
 
   //Groups the motor controllers based on the side of the drive train they are on
   private final MotorControllerGroup left = new MotorControllerGroup(left1, left2);
   private final MotorControllerGroup right = new MotorControllerGroup(right1, right2);
 
+  //DIFFDRIVE!!
   private final DifferentialDrive diffdrive = new DifferentialDrive(left, right);
 
-   
+  //
   public driveTrain() {
     left.setInverted(true);
 
-    leftEncoder = left1.getEncoder();
-    rightEncoder = right1.getEncoder();
+    //leftEncoder = left1.getEncoder();
+    //rightEncoder = right1.getEncoder();
   }
 
-  public void drive(double y, double x){
+  //Takes in controller inputs
+  public void drive(double y, double x) {
     diffdrive.arcadeDrive(y, x);
   }
-
-  public double getEncoder(){
+  
+  //Returns one drive train encoder
+  public double getEncoder() {
     return leftEncoder.getPosition();
   }
 
-  public void resetEncoders(){
+  //resets drive train encoders
+  public void resetEncoders() {
     leftEncoder.setPosition(0);
-    rightEncoder.setPosition(0);
+    rightEncoder.setPosition(0); 
   }
-
 
   @Override
   public void periodic() {

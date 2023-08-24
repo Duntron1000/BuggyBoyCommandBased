@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ArmTiltSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
@@ -33,22 +35,24 @@ public class ArmTiltSubsystem extends SubsystemBase {
     m_PidController.setOutputRange(Constants.TILT_KMinOutput, Constants.TILT_KMaxOutput);
   }
 
+  //Returns if pos arm is moving to is higher than current pos
   public BooleanSupplier bigger(double itemOne){
     return () -> itemOne < getEncoder();
   }
 
+  //Returns if pos arm is moving to is lower than current pos
   public BooleanSupplier unbigger(double thing){
     return () -> thing > getEncoder();
   }
 
-
-
+  
   public void run(double speed){
     armTilt.set(speed);
   }
 
   public void setReference(double r){
      m_PidController.setReference(r, CANSparkMax.ControlType.kPosition);
+     SmartDashboard.putNumber("Tilt Setpoint", r);
   }
 
   public double getEncoder() {

@@ -18,6 +18,7 @@ public class IntakeSubsytem extends SubsystemBase {
         rightEncoder = right.getEncoder();
     }
 
+    //Sets the intake motors to a speed (negative for out, positive for in)
     public void run(double speed){
         left.set(-speed);
         right.set(speed);

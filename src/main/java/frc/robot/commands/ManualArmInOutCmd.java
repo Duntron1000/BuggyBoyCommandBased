@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmTiltSubsystem;
+import frc.robot.subsystems.ArmInOutSubsystem;
 
-public class ManualArmTiltCmd extends CommandBase{
+public class ManualArmInOutCmd extends CommandBase{
     private double rotations;
-    private ArmTiltSubsystem armSub;
+    private ArmInOutSubsystem armSub;
     private double dir;
 
-    public ManualArmTiltCmd(ArmTiltSubsystem armSub, double r){
+    public ManualArmInOutCmd(ArmInOutSubsystem armSub, double r){
         this.armSub = armSub;
         System.out.print(rotations);
         rotations = armSub.getEncoder();

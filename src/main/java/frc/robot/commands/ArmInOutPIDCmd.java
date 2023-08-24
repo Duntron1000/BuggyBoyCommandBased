@@ -1,10 +1,7 @@
 package frc.robot.commands;
 
-import com.revrobotics.SparkMaxPIDController;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmInOutSubsystem;
-import com.revrobotics.CANSparkMax;
 
 public class ArmInOutPIDCmd extends CommandBase{
     private double rotations;
@@ -23,5 +20,11 @@ public class ArmInOutPIDCmd extends CommandBase{
     @Override
     public void execute() {
         armSub.setReference(rotations);
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return (armSub.getEncoder() < rotations+1 && armSub.getEncoder() > rotations-1);
     }
 }

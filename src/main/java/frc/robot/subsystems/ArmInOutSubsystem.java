@@ -1,13 +1,11 @@
 package frc.robot.subsystems;
 
-import javax.swing.text.Position;
-
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -29,12 +27,10 @@ public class ArmInOutSubsystem extends SubsystemBase{
 
     public void setReference(double position){
         pidController.setReference(position, CANSparkMax.ControlType.kPosition);
+        SmartDashboard.putNumber("Extension Setpoint", position);
     }
 
     public double getEncoder(){
         return encoder.getPosition();
     }
-
-
-    
 }

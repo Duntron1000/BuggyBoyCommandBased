@@ -35,6 +35,14 @@ public class Pneumatics extends SubsystemBase {
         cubeMode = false;
     }
 
+    public boolean getCubeMode() {
+        return cubeMode;
+    }
+
+    // public BooleanSupplier isCube(boolean test) {
+    //     return () -> getCubeMode() == test;
+    // }
+
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("Cube Mode: ", cubeMode);

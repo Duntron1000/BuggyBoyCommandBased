@@ -48,7 +48,7 @@ public class driveTrain extends SubsystemBase {
   
   //Returns one drive train encoder
   public double getEncoder() {
-    return leftEncoder.getPosition();
+    return rightEncoder.getPosition();
   }
 
   //resets drive train encoders

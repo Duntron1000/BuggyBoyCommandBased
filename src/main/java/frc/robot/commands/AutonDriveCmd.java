@@ -26,9 +26,8 @@ public class AutonDriveCmd extends CommandBase {
     // }
     @Override
     public void execute() {
-        dt.drive(0.1, 0);
+        dt.drive(Integer.signum((int)setpoint)*0.5, 0);
         SmartDashboard.putNumber("Encoder", dt.getEncoder());
-        System.out.print("whoa!");
     }
 
     // Returns true when the command should end.

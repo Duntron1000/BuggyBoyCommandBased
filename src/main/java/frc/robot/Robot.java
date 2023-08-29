@@ -64,9 +64,9 @@ public class Robot extends TimedRobot {
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
+      System.out.println("Auton is not null");
       m_autonomousCommand.schedule();
     }
-    System.out.println("/suton wna,bled");
   }
 
   /** This function is called periodically during autonomous. */

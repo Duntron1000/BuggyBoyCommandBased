@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.autons.AutonBase;
+import frc.robot.autons.AutonOneCone;
+import frc.robot.autons.AutonOneConeExit;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
@@ -75,8 +77,11 @@ public class RobotContainer {
     xbox.b().and(armTiltSubsystem.unbigger(Constants.pidTiltPos2)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos2),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos2)));
 
     //Mid
-    xbox.x().and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube)));
-    xbox.x().and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3)));
+    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube)));
+    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3)));
+    
+    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cone)));
+    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cone),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3)));
     
     //High
     xbox.y().onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos4),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos4)));
@@ -108,6 +113,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new AutonBase(driveSubsystem);
+    //return new AutonBase(driveSubsystem);
+    //return new AutonOneCone(armTiltSubsystem);
+    return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
   }
 }

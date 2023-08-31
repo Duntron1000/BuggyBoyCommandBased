@@ -71,4 +71,9 @@ public final class Constants {
   public static final double holdSpeed = -.2;
   public static final double outSlowSpeed = .2;
   public static final double outFastSpeed = .6;
+
+  public static final String kDefaultAuto = "Nothing";
+  public static final String kCustomAuto1 = "communityExit";
+  public static final String kCustomAuto2 = "oneCone";
+  public static final String kCustomAuto3 = "oneConeExit";
 }

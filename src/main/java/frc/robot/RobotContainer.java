@@ -10,6 +10,7 @@ import frc.robot.autons.AutonOneConeExit;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -40,6 +41,7 @@ public class RobotContainer {
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick joystick = new Joystick(Constants.driverControllerPort);
   private final CommandXboxController xbox = new CommandXboxController(Constants.operatorControllerPort);
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -111,10 +113,17 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(SendableChooser<String> chooser) {
     // An example command will be run in autonomous
     //return new AutonBase(driveSubsystem);
     //return new AutonOneCone(armTiltSubsystem);
-    return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
+    String m_autoSelected = chooser.getSelected();
+    
+    System.out.println("Auto selected: " + m_autoSelected);
+    if (m_autoSelected.equals(Constants.kCustomAuto1)) return new AutonBase(driveSubsystem);
+    else if (m_autoSelected.equals(Constants.kCustomAuto2)) return new AutonOneCone(armTiltSubsystem);
+    else if (m_autoSelected.equals(Constants.kCustomAuto3)) return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
+    else return null;
+    //return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
   }
 }

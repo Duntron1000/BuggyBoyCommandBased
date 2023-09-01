@@ -13,6 +13,7 @@ public class ArmInOutSubsystem extends SubsystemBase{
     private CANSparkMax inout = new CANSparkMax(Constants.ARM_INOUT, MotorType.kBrushless);
     private RelativeEncoder encoder;
     private SparkMaxPIDController pidController;
+    private double setpoint = 0;
 
     public ArmInOutSubsystem(){
         encoder = inout.getEncoder();
@@ -27,10 +28,15 @@ public class ArmInOutSubsystem extends SubsystemBase{
 
     public void setReference(double position){
         pidController.setReference(position, CANSparkMax.ControlType.kPosition);
-        SmartDashboard.putNumber("Extension Setpoint", position);
+        setpoint = position;
+        //SmartDashboard.putNumber("Extension Setpoint", position);
     }
 
     public double getEncoder(){
         return encoder.getPosition();
+    }
+
+    public double getSetpoint(){
+        return setpoint;
     }
 }

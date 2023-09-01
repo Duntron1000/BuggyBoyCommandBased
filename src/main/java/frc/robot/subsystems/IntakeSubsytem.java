@@ -12,6 +12,7 @@ public class IntakeSubsytem extends SubsystemBase {
     private RelativeEncoder leftEncoder;
     private CANSparkMax right = new CANSparkMax(Constants.INTAKE_RIGHT, MotorType.kBrushless);
     private RelativeEncoder rightEncoder;
+    private static IntakeSubsytem intake;
 
     public IntakeSubsytem(){
         leftEncoder = left.getEncoder();
@@ -22,6 +23,13 @@ public class IntakeSubsytem extends SubsystemBase {
     public void run(double speed){
         left.set(-speed);
         right.set(speed);
+    }
+
+    public static IntakeSubsytem getInstance(){
+        if (intake == null){
+            intake = new IntakeSubsytem();
+        }
+        return intake;
     }
 
     @Override

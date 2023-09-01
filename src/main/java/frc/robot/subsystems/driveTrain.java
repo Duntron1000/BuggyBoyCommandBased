@@ -33,6 +33,9 @@ public class driveTrain extends SubsystemBase {
   //DIFFDRIVE!!
   private final DifferentialDrive diffdrive = new DifferentialDrive(left, right);
 
+  //Drive Train
+  private static driveTrain drivetrain;
+
   //
   public driveTrain() {
     left.setInverted(true);
@@ -55,6 +58,13 @@ public class driveTrain extends SubsystemBase {
   public void resetEncoders() {
     leftEncoder.setPosition(0);
     rightEncoder.setPosition(0); 
+  }
+
+  public static driveTrain getInstance(){
+    if (drivetrain == null){
+      drivetrain = new driveTrain();
+    }
+    return drivetrain;
   }
 
   @Override

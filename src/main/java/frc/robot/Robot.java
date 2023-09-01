@@ -30,6 +30,9 @@ public class Robot extends TimedRobot {
 
   public SendableChooser<String> m_chooser;
 
+  private ShuffleBoardHandler shuffleBoardHandler = ShuffleBoardHandler.getInstance();
+
+
   ShuffleboardTab tabOne;
 
   /**
@@ -41,19 +44,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboarDd.
 
-    m_chooser = new SendableChooser<>();
-
-    tabOne = Shuffleboard.getTab("Drive"); 
-    tabOne.add("Autons", m_chooser);         
-
-    m_robotContainer = new RobotContainer();
-
-    CameraServer.startAutomaticCapture();
-
-    m_chooser.setDefaultOption("Nothing", Constants.kDefaultAuto);
-    m_chooser.addOption("Exit Community", Constants.kCustomAuto1);
-    m_chooser.addOption("One Cone", Constants.kCustomAuto2);
-    m_chooser.addOption("One Cone Exit", Constants.kCustomAuto3);
+    shuffleBoardHandler.setup();
   }
 
   /**
@@ -70,6 +61,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    shuffleBoardHandler.update();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

@@ -17,6 +17,9 @@ public class Pneumatics extends SubsystemBase {
     //Checks intake position
     public boolean cubeMode = false;
 
+    //Peumatics Object
+    private static Pneumatics pneumatics;
+
     //Toggles the piston
     public void toggle() {
         if (cubeMode) retract();
@@ -37,6 +40,13 @@ public class Pneumatics extends SubsystemBase {
 
     public boolean getCubeMode() {
         return cubeMode;
+    }
+
+    public static Pneumatics getInstance(){
+        if (pneumatics == null){
+            pneumatics = new Pneumatics();
+        }
+        return pneumatics;
     }
 
     // public BooleanSupplier isCube(boolean test) {

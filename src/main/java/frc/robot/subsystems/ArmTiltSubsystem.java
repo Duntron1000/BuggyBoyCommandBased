@@ -25,6 +25,10 @@ public class ArmTiltSubsystem extends SubsystemBase {
 
   private SparkMaxPIDController m_PidController;
 
+  private static ArmTiltSubsystem tilt;
+
+  private double setPoint;
+
   public ArmTiltSubsystem() {
     m_PidController = armTilt.getPIDController();
     m_PidController.setP(Constants.TILT_KP);
@@ -52,11 +56,23 @@ public class ArmTiltSubsystem extends SubsystemBase {
 
   public void setReference(double r){
      m_PidController.setReference(r, CANSparkMax.ControlType.kPosition);
-     SmartDashboard.putNumber("Tilt Setpoint", r);
+     setPoint = r;
+     //SmartDashboard.putNumber("Tilt Setpoint", r);
   }
 
   public double getEncoder() {
     return encoder.getPosition();
+  }
+
+  public double getSetpoint(){
+    return setPoint;
+  }
+
+  public static ArmTiltSubsystem getInstance(){
+    if (tilt == null){
+      tilt = new ArmTiltSubsystem();
+    }
+    return tilt;
   }
 
   @Override

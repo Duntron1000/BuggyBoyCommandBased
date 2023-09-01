@@ -31,17 +31,17 @@ public class RobotContainer {
   //temp var
 
   //Subsystems
-  private final driveTrain driveSubsystem = new driveTrain();
-  public final ArmTiltSubsystem armTiltSubsystem = new ArmTiltSubsystem();
-  private final ArmInOutSubsystem armInOutSubsystem = new ArmInOutSubsystem();
-  private final IntakeSubsytem intakeSubsytem = new IntakeSubsytem();
-  private final Pneumatics pneumatics = new Pneumatics();
+  private final driveTrain driveSubsystem = driveTrain.getInstance();
+  public final ArmTiltSubsystem armTiltSubsystem = ArmTiltSubsystem.getInstance();
+  private final ArmInOutSubsystem armInOutSubsystem = ArmInOutSubsystem.getInstance();
+  private final IntakeSubsytem intakeSubsytem = IntakeSubsytem.getInstance();
+  private final Pneumatics pneumatics = Pneumatics.getInstance();
+  private final ShuffleBoardHandler shuffle = ShuffleBoardHandler.getInstance();
 
   //Controllers
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick joystick = new Joystick(Constants.driverControllerPort);
   private final CommandXboxController xbox = new CommandXboxController(Constants.operatorControllerPort);
-  private final ShuffleBoardHandler shuffle = new ShuffleBoardHandler(armInOutSubsystem, armTiltSubsystem, driveSubsystem, intakeSubsytem, pneumatics);
 
 
   /**

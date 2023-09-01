@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmInOutSubsystem extends SubsystemBase{
+    private static ArmInOutSubsystem armInOutSubsystem;
     private CANSparkMax inout = new CANSparkMax(Constants.ARM_INOUT, MotorType.kBrushless);
     private RelativeEncoder encoder;
     private SparkMaxPIDController pidController;
@@ -29,6 +30,7 @@ public class ArmInOutSubsystem extends SubsystemBase{
     public void setReference(double position){
         pidController.setReference(position, CANSparkMax.ControlType.kPosition);
         setpoint = position;
+        System.out.println(position);
         //SmartDashboard.putNumber("Extension Setpoint", position);
     }
 
@@ -38,5 +40,12 @@ public class ArmInOutSubsystem extends SubsystemBase{
 
     public double getSetpoint(){
         return setpoint;
+    }
+
+    public static ArmInOutSubsystem getInstance(){
+        if (armInOutSubsystem == null){
+            armInOutSubsystem = new ArmInOutSubsystem();
+        }
+        return armInOutSubsystem;
     }
 }

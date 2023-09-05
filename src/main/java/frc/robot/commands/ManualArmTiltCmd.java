@@ -8,8 +8,8 @@ public class ManualArmTiltCmd extends CommandBase{
     private ArmTiltSubsystem armSub;
     private double dir;
 
-    public ManualArmTiltCmd(ArmTiltSubsystem armSub, double r){
-        this.armSub = armSub;
+    public ManualArmTiltCmd(double r){
+        this.armSub = ArmTiltSubsystem.getInstance();
         System.out.print(rotations);
         rotations = armSub.getEncoder();
         dir = r;

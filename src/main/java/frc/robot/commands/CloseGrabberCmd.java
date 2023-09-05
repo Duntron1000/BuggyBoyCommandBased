@@ -6,8 +6,8 @@ import frc.robot.subsystems.Pneumatics;
 public class CloseGrabberCmd extends CommandBase {
     private Pneumatics pneu;
 
-    public CloseGrabberCmd(Pneumatics pneu){
-        this.pneu = pneu;
+    public CloseGrabberCmd(){
+        this.pneu = Pneumatics.getInstance();
     }
 
     @Override

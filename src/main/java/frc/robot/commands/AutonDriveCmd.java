@@ -9,16 +9,18 @@ import frc.robot.subsystems.driveTrain;
 public class AutonDriveCmd extends CommandBase {
 
     private double setpoint;
+    private double speed;
     private driveTrain dt;
     
-    public AutonDriveCmd (driveTrain dt, double setpoint) {
+    public AutonDriveCmd (double setpoint, double speed) {
+        this.dt = driveTrain.getInstance();
         dt.resetEncoders();
         SmartDashboard.putNumber("Encoder", dt.getEncoder());
         this.setpoint = setpoint;
-        this.dt = dt;
+        this.speed = speed;
         addRequirements(dt);
     }
-
+    
     // @Override
     // public void initialize() {
         
@@ -26,14 +28,18 @@ public class AutonDriveCmd extends CommandBase {
     // }
     @Override
     public void execute() {
-        dt.drive(Integer.signum((int)setpoint)*0.5, 0);
+        dt.drive(speed, 0);
         SmartDashboard.putNumber("Encoder", dt.getEncoder());
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return (dt.getEncoder() >= setpoint);
+        if(setpoint > 0){
+            return (dt.getEncoder() >= setpoint);
+        }else{
+            return (dt.getEncoder() <= setpoint);
+        }
     }
 
     @Override

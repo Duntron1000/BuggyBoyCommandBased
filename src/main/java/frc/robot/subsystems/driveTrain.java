@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class driveTrain extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
+  //Gyro
+  private final AHRS gyro = new AHRS();
 
   //Objects for each of the drivetrain's motorcontrollers
   private final CANSparkMax left1 = new CANSparkMax(Constants.CAN_LEFT1, MotorType.kBrushless);
@@ -51,7 +54,7 @@ public class driveTrain extends SubsystemBase {
   
   //Returns one drive train encoder
   public double getEncoder() {
-    return rightEncoder.getPosition();
+    return leftEncoder.getPosition();
   }
 
   //resets drive train encoders
@@ -65,6 +68,11 @@ public class driveTrain extends SubsystemBase {
       drivetrain = new driveTrain();
     }
     return drivetrain;
+  }
+
+  //Returns current angle of the robot
+  public double getPitch() {
+    return gyro.getPitch();
   }
 
   @Override

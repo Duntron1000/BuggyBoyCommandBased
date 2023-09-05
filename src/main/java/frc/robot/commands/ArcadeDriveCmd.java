@@ -16,8 +16,8 @@ public class ArcadeDriveCmd extends CommandBase {
   private DoubleSupplier speedFunction;
   private DoubleSupplier turnFunction;
 
-  public ArcadeDriveCmd(driveTrain dirveSubsystem, DoubleSupplier speedFunction, DoubleSupplier turnFunction) {
-    this.dirveSubsystem = dirveSubsystem;
+  public ArcadeDriveCmd(DoubleSupplier speedFunction, DoubleSupplier turnFunction) {
+    this.dirveSubsystem = driveTrain.getInstance();
     this.speedFunction = speedFunction;
     this.turnFunction = turnFunction;
     

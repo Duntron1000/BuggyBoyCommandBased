@@ -8,8 +8,8 @@ public class ManualArmInOutCmd extends CommandBase{
     private ArmInOutSubsystem armSub;
     private double dir;
 
-    public ManualArmInOutCmd(ArmInOutSubsystem armSub, double r){
-        this.armSub = armSub;
+    public ManualArmInOutCmd(double r){
+        this.armSub = ArmInOutSubsystem.getInstance();
         System.out.print(rotations);
         rotations = armSub.getEncoder();
         dir = r;

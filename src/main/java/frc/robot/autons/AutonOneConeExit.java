@@ -8,11 +8,11 @@ import frc.robot.commands.AutonDriveCmd;
 
 public class AutonOneConeExit extends SequentialCommandGroup {
     
-    public AutonOneConeExit(ArmTiltSubsystem a, driveTrain dt) {
+    public AutonOneConeExit() {
         addCommands(
-            new ArmTiltPIDCmd(a, -20),
-            new ArmTiltPIDCmd(a, -5),
-            new AutonDriveCmd(dt, 30)
+            new ArmTiltPIDCmd(-20),
+            new ArmTiltPIDCmd(-5),
+            new AutonDriveCmd(30, .5)
         );
     }
 }

@@ -7,8 +7,8 @@ public class ArmInOutPIDCmd extends CommandBase{
     private double rotations;
     private ArmInOutSubsystem armSub;
 
-    public ArmInOutPIDCmd(ArmInOutSubsystem armSub, double r){
-        this.armSub = armSub;
+    public ArmInOutPIDCmd(double r){
+        this.armSub = ArmInOutSubsystem.getInstance();
         rotations = r;
         addRequirements(armSub);
     }

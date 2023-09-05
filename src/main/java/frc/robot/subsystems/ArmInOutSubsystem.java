@@ -42,6 +42,10 @@ public class ArmInOutSubsystem extends SubsystemBase{
         return setpoint;
     }
 
+    public void resetEncoders(){
+        encoder.setPosition(0);
+    }
+
     public static ArmInOutSubsystem getInstance(){
         if (armInOutSubsystem == null){
             armInOutSubsystem = new ArmInOutSubsystem();

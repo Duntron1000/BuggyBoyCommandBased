@@ -7,8 +7,8 @@ public class RunIntakeCmd extends CommandBase{
     private double speed;
     private IntakeSubsytem intakeSub;
 
-    public RunIntakeCmd(IntakeSubsytem intakeSub, double speed){
-        this.intakeSub = intakeSub;
+    public RunIntakeCmd(double speed){
+        this.intakeSub = IntakeSubsytem.getInstance();
         this.speed = speed;
     }
 

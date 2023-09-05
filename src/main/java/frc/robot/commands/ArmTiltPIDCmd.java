@@ -7,8 +7,8 @@ public class ArmTiltPIDCmd extends CommandBase{
     private double rotations;
     private ArmTiltSubsystem armSub;
 
-    public ArmTiltPIDCmd(ArmTiltSubsystem armSub, double r){
-        this.armSub = armSub;
+    public ArmTiltPIDCmd(double r){
+        this.armSub = ArmTiltSubsystem.getInstance();
         rotations = r;
         addRequirements(armSub);
     }

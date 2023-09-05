@@ -7,8 +7,8 @@ public class ToggleIntakeCmd extends CommandBase {
     private Pneumatics pneu;
     private boolean done = false;
 
-    public ToggleIntakeCmd(Pneumatics pneu){
-        this.pneu = pneu;
+    public ToggleIntakeCmd(){
+        this.pneu = Pneumatics.getInstance();
     }
 
     @Override

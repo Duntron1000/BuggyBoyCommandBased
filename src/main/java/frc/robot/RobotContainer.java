@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import frc.robot.autons.AutonBalance;
+import frc.robot.autons.AutonBalanceOneCone;
 import frc.robot.autons.AutonBase;
 import frc.robot.autons.AutonOneCone;
 import frc.robot.autons.AutonOneConeExit;
+import frc.robot.autons.AutonOneConeMid;
+import frc.robot.autons.AutonOneConeMidExit;
+import frc.robot.autons.AutonOneConeMidShoot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
@@ -51,7 +56,7 @@ public class RobotContainer {
     // Configure the trigger bindings
 
     //For driving the robot
-    driveSubsystem.setDefaultCommand(new ArcadeDriveCmd(driveSubsystem, () -> joystick.getY(), () -> joystick.getX()));
+    driveSubsystem.setDefaultCommand(new ArcadeDriveCmd(() -> joystick.getY(), () -> joystick.getX()));
 
 
     configureBindings();
@@ -74,38 +79,38 @@ public class RobotContainer {
     //new JoystickButton(joystick, 6).onTrue());
 
     //Low
-    xbox.a().onTrue(new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos1).andThen(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos1)));
+    xbox.a().onTrue(new ArmInOutPIDCmd(Constants.pidExtendPos1).andThen(new ArmTiltPIDCmd(Constants.pidTiltPos1)));
     
     //Human player station
-    xbox.b().and(armTiltSubsystem.bigger(Constants.pidTiltPos2)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos2),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos2)));
-    xbox.b().and(armTiltSubsystem.unbigger(Constants.pidTiltPos2)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos2),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos2)));
+    xbox.b().and(armTiltSubsystem.bigger(Constants.pidTiltPos2)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(Constants.pidTiltPos2),  new ArmInOutPIDCmd(Constants.pidExtendPos2)));
+    xbox.b().and(armTiltSubsystem.unbigger(Constants.pidTiltPos2)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(Constants.pidExtendPos2),  new ArmTiltPIDCmd(Constants.pidTiltPos2)));
 
     //Mid
-    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube)));
-    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cube),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3)));
+    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(Constants.pidTiltPos3),  new ArmInOutPIDCmd(Constants.pidExtendPos3Cube)));
+    xbox.x().and(() -> pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(Constants.pidExtendPos3Cube),  new ArmTiltPIDCmd(Constants.pidTiltPos3)));
     
-    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cone)));
-    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos3Cone),  new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos3)));
+    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.bigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(Constants.pidTiltPos3),  new ArmInOutPIDCmd(Constants.pidExtendPos3Cone)));
+    xbox.x().and(() -> !pneumatics.getCubeMode()).and(armTiltSubsystem.unbigger(Constants.pidTiltPos3)).onTrue(new SequentialCommandGroup( new ArmInOutPIDCmd(Constants.pidExtendPos3Cone),  new ArmTiltPIDCmd(Constants.pidTiltPos3)));
     
     //High
-    xbox.y().onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(armTiltSubsystem, Constants.pidTiltPos4),  new ArmInOutPIDCmd(armInOutSubsystem, Constants.pidExtendPos4)));
+    xbox.y().onTrue(new SequentialCommandGroup(new ArmTiltPIDCmd(Constants.pidTiltPos4),  new ArmInOutPIDCmd(Constants.pidExtendPos4)));
     
     //Tilt manual
-    xbox.pov(Constants.xdPadUp).whileTrue(new ManualArmTiltCmd(armTiltSubsystem, -Constants.pidManualTiltSpeed));
-    xbox.pov(Constants.xdPadDown).whileTrue(new ManualArmTiltCmd(armTiltSubsystem, Constants.pidManualTiltSpeed));
+    xbox.pov(Constants.xdPadUp).whileTrue(new ManualArmTiltCmd(-Constants.pidManualTiltSpeed));
+    xbox.pov(Constants.xdPadDown).whileTrue(new ManualArmTiltCmd(Constants.pidManualTiltSpeed));
     
     //In out manual
-    xbox.pov(Constants.xdPadRight).whileTrue(new ManualArmInOutCmd(armInOutSubsystem, -Constants.pidManualExtendSpeed));
-    xbox.pov(Constants.xdPadLeft).whileTrue(new ManualArmInOutCmd(armInOutSubsystem, Constants.pidManualExtendSpeed));
+    xbox.pov(Constants.xdPadRight).whileTrue(new ManualArmInOutCmd(-Constants.pidManualExtendSpeed));
+    xbox.pov(Constants.xdPadLeft).whileTrue(new ManualArmInOutCmd(Constants.pidManualExtendSpeed));
 
     //Grabber motors
-    xbox.leftBumper().whileTrue(new RunIntakeCmd(intakeSubsytem, Constants.holdSpeed));
-    //xbox.rightBumper().and(xbox.back()).whileTrue(new RunIntakeCmd(intakeSubsytem, Constants.outSlowSpeed));
-    xbox.rightBumper().whileTrue(new RunIntakeCmd(intakeSubsytem, Constants.outFastSpeed));
+    xbox.leftBumper().whileTrue(new RunIntakeCmd(Constants.holdSpeed));
+    //xbox.rightBumper().and(xbox.back()).whileTrue(new RunIntakeCmd(Constants.outSlowSpeed));
+    xbox.rightBumper().whileTrue(new RunIntakeCmd(Constants.outFastSpeed));
     //xbox.a()
     
     //Grabber toggle position
-    new JoystickButton(joystick, 5).whileTrue(new ToggleIntakeCmd(pneumatics));
+    new JoystickButton(joystick, 5).whileTrue(new ToggleIntakeCmd());
 
     //new JoystickButton(joystick, 8).whileTrue(new driveForwardCmd(driveSubsystem, .1, 50.0));
   }
@@ -115,17 +120,23 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand(SendableChooser<String> chooser) {
+  public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     //return new AutonBase(driveSubsystem);
     //return new AutonOneCone(armTiltSubsystem);
-    String m_autoSelected = chooser.getSelected();
+    String m_autoSelected = shuffle.getSelected();
     
     System.out.println("Auto selected: " + m_autoSelected);
-    if (m_autoSelected.equals(Constants.kCustomAuto1)) return new AutonBase(driveSubsystem);
-    else if (m_autoSelected.equals(Constants.kCustomAuto2)) return new AutonOneCone(armTiltSubsystem);
-    else if (m_autoSelected.equals(Constants.kCustomAuto3)) return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
+    if (m_autoSelected.equals(Constants.kCustomAuto1)) return new AutonBase();
+    else if (m_autoSelected.equals(Constants.kCustomAuto2)) return new AutonOneCone();
+    else if (m_autoSelected.equals(Constants.kCustomAuto3)) return new AutonOneConeExit();
+    else if (m_autoSelected.equals(Constants.kCustomAuto4)) return new AutonOneConeMid();
+    else if (m_autoSelected.equals(Constants.kCustomAuto5)) return new AutonOneConeMidExit();
+    else if (m_autoSelected.equals(Constants.kCustomAuto6)) return new AutonOneConeMidShoot();
+    else if (m_autoSelected.equals(Constants.kCustomAuto7)) return new AutonBalance();
+    else if (m_autoSelected.equals(Constants.kCustomAuto8)) return new AutonBalanceOneCone();
+    else if (m_autoSelected.equals(Constants.kCustomAuto9)) return new AutonOneConeMid();
     else return null;
-    //return new AutonOneConeExit(armTiltSubsystem, driveSubsystem);
+    //return new AutonOneConeExit(driveSubsystem);
   }
 }

@@ -6,8 +6,8 @@ import frc.robot.subsystems.Pneumatics;
 public class OpenGrabberCmd extends CommandBase {
     private Pneumatics pneu;
 
-    public OpenGrabberCmd(Pneumatics pneu){
-        this.pneu = pneu;
+    public OpenGrabberCmd(){
+        this.pneu = Pneumatics.getInstance();
     }
 
     @Override

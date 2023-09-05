@@ -7,9 +7,9 @@ import frc.robot.subsystems.driveTrain;
 
 public class AutonBase extends SequentialCommandGroup{
 
-    public AutonBase(driveTrain dr) {
+    public AutonBase() {
         addCommands(
-           new AutonDriveCmd(dr, 100)
+           new AutonDriveCmd(-87, .4)
         );
 
         // new SequentialCommandGroup(

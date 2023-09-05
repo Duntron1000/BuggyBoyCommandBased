@@ -8,7 +8,7 @@ public class AutonBalance extends SequentialCommandGroup {
     //change the auton drive cmmand to take in a speed
     public AutonBalance(){
         addCommands(
-            new AutonDriveCmd(100),
+            new AutonDriveCmd(-40, .6),
             new BalanceCmd()
         );
     }

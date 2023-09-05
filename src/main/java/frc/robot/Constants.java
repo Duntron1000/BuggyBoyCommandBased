@@ -76,4 +76,15 @@ public final class Constants {
   public static final String kCustomAuto1 = "communityExit";
   public static final String kCustomAuto2 = "oneCone";
   public static final String kCustomAuto3 = "oneConeExit";
+  public static final String kCustomAuto4 = "oneConeMid";
+  public static final String kCustomAuto5 = "oneConeMidExit";
+  public static final String kCustomAuto6 = "oneConeMidShoot";
+  public static final String kCustomAuto7 = "Balance";
+  public static final String kCustomAuto8 = "oneConeBalance";
+  public static final String kCustomAuto9 = "oneConeMidBalance";
+
+
+
+
+
 }

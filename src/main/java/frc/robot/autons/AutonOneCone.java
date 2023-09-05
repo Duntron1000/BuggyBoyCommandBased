@@ -6,10 +6,10 @@ import frc.robot.subsystems.ArmTiltSubsystem;
 
 public class AutonOneCone extends SequentialCommandGroup {
     
-    public AutonOneCone(ArmTiltSubsystem a) {
+    public AutonOneCone() {
         addCommands(
-            new ArmTiltPIDCmd(a, -20),
-            new ArmTiltPIDCmd(a, -5)
+            new ArmTiltPIDCmd(-20),
+            new ArmTiltPIDCmd(-5)
         );
     }
 }

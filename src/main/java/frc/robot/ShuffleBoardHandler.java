@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.cameraserver.CameraServer;
 
 import java.util.Map;
 
@@ -34,6 +35,8 @@ public class ShuffleBoardHandler {
         this.intake = IntakeSubsytem.getInstance();
         this.p = Pneumatics.getInstance();
         m_chooser = new SendableChooser<String>();
+
+        CameraServer.startAutomaticCapture();
     }
 
     public void setup(){
@@ -41,7 +44,7 @@ public class ShuffleBoardHandler {
         list = tab.getLayout("Arm", BuiltInLayouts.kList).withProperties(Map.of("Number of columns", 1, "Number of rows", 4));
 
         //Auton chooser
-        tab.add("Autons", m_chooser);       
+        tab.add("Autons", m_chooser);     
         
         m_chooser.setDefaultOption("Nothing", Constants.kDefaultAuto);
         m_chooser.addOption("Exit Community", Constants.kCustomAuto1);
@@ -53,6 +56,10 @@ public class ShuffleBoardHandler {
         m_chooser.addOption("Balance", Constants.kCustomAuto7);
         m_chooser.addOption("One Cone Balance", Constants.kCustomAuto8);
         m_chooser.addOption("Mid Cone Balance", Constants.kCustomAuto9);
+        m_chooser.addOption("High Cube", Constants.kCustomAuto10);
+        m_chooser.addOption("Mid Cube", Constants.kCustomAuto11);
+        m_chooser.addOption("Mid Cube Exit", Constants.kCustomAuto12);
+        m_chooser.addOption("High Cube Exit", Constants.kCustomAuto13);
 
         //Adds values we want to shuffleboard
         inoutSetpoint = list.add("Arm Inout SetPosition: ", inout.getSetpoint()).getEntry();

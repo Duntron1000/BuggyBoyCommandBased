@@ -20,6 +20,9 @@
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
     "Connections": {
       "open": true
     },

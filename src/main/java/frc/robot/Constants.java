@@ -82,6 +82,10 @@ public final class Constants {
   public static final String kCustomAuto7 = "Balance";
   public static final String kCustomAuto8 = "oneConeBalance";
   public static final String kCustomAuto9 = "oneConeMidBalance";
+  public static final String kCustomAuto10 = "oneHighCube";
+  public static final String kCustomAuto11 = "Mid Cube";
+  public static final String kCustomAuto12 = "Mid Cube Exit";
+  public static final String kCustomAuto13 = "High Cube Exit";
 
 
 

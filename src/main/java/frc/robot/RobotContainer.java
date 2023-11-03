@@ -4,18 +4,10 @@
 
 package frc.robot;
 
-import frc.robot.autons.AutonBalance;
-import frc.robot.autons.AutonBalanceOneCone;
-import frc.robot.autons.AutonBase;
-import frc.robot.autons.AutonOneCone;
-import frc.robot.autons.AutonOneConeExit;
-import frc.robot.autons.AutonOneConeMid;
-import frc.robot.autons.AutonOneConeMidExit;
-import frc.robot.autons.AutonOneConeMidShoot;
+import frc.robot.autons.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -136,6 +128,10 @@ public class RobotContainer {
     else if (m_autoSelected.equals(Constants.kCustomAuto7)) return new AutonBalance();
     else if (m_autoSelected.equals(Constants.kCustomAuto8)) return new AutonBalanceOneCone();
     else if (m_autoSelected.equals(Constants.kCustomAuto9)) return new AutonOneConeMid();
+    else if (m_autoSelected.equals(Constants.kCustomAuto10)) return new AutonOneHighCube();
+    else if (m_autoSelected.equals(Constants.kCustomAuto11)) return new CubeMidCmd();
+    else if (m_autoSelected.equals(Constants.kCustomAuto12)) return new AutonCubeMidExit();
+    else if (m_autoSelected.equals(Constants.kCustomAuto13)) return new AutonOneHighCubeExit();
     else return null;
     //return new AutonOneConeExit(driveSubsystem);
   }

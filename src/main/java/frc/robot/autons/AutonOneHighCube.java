@@ -8,14 +8,14 @@ import frc.robot.commands.ArmTiltPIDCmd;
 import frc.robot.commands.SetIntakeCmd;
 import frc.robot.subsystems.ArmInOutSubsystem;
 
-public class AutonOneConeMidShoot extends SequentialCommandGroup {
+public class AutonOneHighCube extends SequentialCommandGroup {
     
-    public AutonOneConeMidShoot(){
+    public AutonOneHighCube(){
         addCommands(
-            new SetIntakeCmd(-.5),
-            new ParallelCommandGroup(new ArmTiltPIDCmd(-90), new ArmInOutPIDCmd(-40)),
+            new SetIntakeCmd(-.3),
+            new ParallelCommandGroup(new ArmTiltPIDCmd(-85), new ArmInOutPIDCmd(-90)),
             new SetIntakeCmd(1),
-            new WaitCommand(.2),
+            new WaitCommand(.5),
             new SetIntakeCmd(0),
             new ParallelCommandGroup(new ArmInOutPIDCmd(0), new ArmTiltPIDCmd(-0))
         );
